@@ -102,6 +102,22 @@ def iter_windows(width, height, tile_size):
             yield row, col, Window(col, row, tile_size, tile_size)
 
 
+def read_window_padded(ds, window, tile_size, fill_value):
+    """Read a window that may extend past the raster edge, padding the
+    out-of-bounds part with fill_value (top-left aligned). Unlike a boundless
+    read, this works on a WarpedVRT, which forbids boundless reads.
+    """
+    col_off, row_off = int(window.col_off), int(window.row_off)
+    valid_w = max(0, min(col_off + int(window.width), ds.width) - col_off)
+    valid_h = max(0, min(row_off + int(window.height), ds.height) - row_off)
+
+    out = np.full((ds.count, tile_size, tile_size), fill_value, dtype=ds.dtypes[0])
+    if valid_w > 0 and valid_h > 0:
+        data = ds.read(window=Window(col_off, row_off, valid_w, valid_h))
+        out[:, :valid_h, :valid_w] = data
+    return out
+
+
 def nodata_fraction(image, nodata_value):
     if np.isnan(nodata_value):
         bad = np.isnan(image)
@@ -133,7 +149,7 @@ def tile_pair(block_id, img_path, label_path, args, writer, tiles_written):
                 if frac_nodata > args.max_nodata_frac:
                     continue
 
-                label = label_vrt.read(window=window, boundless=True, fill_value=0)
+                label = read_window_padded(label_vrt, window, tile_size, fill_value=0)
 
                 transform = img_ds.window_transform(window)
                 out_name = f"{img_path.stem}_r{row:05d}_c{col:05d}.npz"
