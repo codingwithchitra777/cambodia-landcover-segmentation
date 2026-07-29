@@ -1,0 +1,10 @@
+# Copy to split_blocks_config.yaml (gitignored) and fill in your values, then:
+#   python scripts/split_blocks.py --config scripts/split_blocks_config.yaml
+
+manifest: data/tiles/manifest.csv
+output_dir: data/tiles
+
+train_frac: 0.7
+val_frac: 0.15
+test_frac: 0.15
+seed: 42

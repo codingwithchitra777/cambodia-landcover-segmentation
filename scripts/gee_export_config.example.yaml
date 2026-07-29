@@ -1,0 +1,20 @@
+    # Copy to gee_export_config.yaml (gitignored) and fill in your values, then:
+#   python scripts/gee_export.py --config scripts/gee_export_config.yaml
+# Any flag here can still be overridden on the CLI.
+
+ee_project: your-gee-cloud-project-id
+aoi: data/raw/blocks.geojson
+block_id_field: block_id
+
+year: 2023
+season_start_month: 11
+season_end_month: 3
+
+cs_threshold: 0.6
+scale: 10
+crs: EPSG:4326
+
+export: imagery,labels
+export_target: drive
+drive_folder: cambodia_lc_export
+prefix: cambodia_lc
