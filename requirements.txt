@@ -1,0 +1,21 @@
+# Core
+numpy
+pandas
+matplotlib
+
+# Geospatial
+rasterio
+geopandas
+shapely
+earthengine-api
+
+# Deep learning (PyTorch path — pin versions once environment is set)
+torch
+torchvision
+segmentation-models-pytorch
+transformers            # for SegFormer
+
+# Utilities
+scikit-learn
+tqdm
+pyyaml

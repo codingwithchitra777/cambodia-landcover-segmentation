@@ -1,0 +1,53 @@
+# --- Data & model artifacts (too large / regenerable — keep out of git) ---
+data/raw/
+data/tiles/
+data/labels/
+models/
+*.tif
+*.tiff
+*.npz
+*.npy
+*.pth
+*.pt
+*.h5
+*.ckpt
+*.onnx
+
+# Keep folder structure but not contents
+!data/raw/.gitkeep
+!data/tiles/.gitkeep
+!data/labels/.gitkeep
+!models/.gitkeep
+
+# --- Results: keep small tables/figures, ignore heavy dumps ---
+results/**/*.pkl
+results/**/checkpoints/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.python-version
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# --- Environment / secrets ---
+.env
+*.json.key
+gee-service-account*.json
+credentials*.json
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
