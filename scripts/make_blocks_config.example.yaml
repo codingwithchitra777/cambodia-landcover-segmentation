@@ -1,0 +1,13 @@
+# Copy to make_blocks_config.yaml (gitignored) and adjust, then:
+#   python scripts/make_blocks.py --config scripts/make_blocks_config.yaml
+
+boundary: data/raw/cambodia_boundary.geojson
+output: data/raw/blocks.geojson
+
+# Square block side length, in km.
+block_size_km: 20
+# Centre-to-centre spacing. > block_size_km samples the country (gaps);
+# == block_size_km gives wall-to-wall contiguous coverage.
+spacing_km: 55
+# Keep a block only if this fraction of it is inside the boundary.
+min_land_frac: 0.5
