@@ -6,7 +6,10 @@ ee_project: your-gee-cloud-project-id
 aoi: data/raw/blocks.geojson
 block_id_field: block_id
 
-year: 2023
+# Start year of the dry season: year=2025 -> Nov 2025 to Mar 2026.
+# Pick the most recent COMPLETE dry season, and match it to the season your
+# hand-corrected ground-truth tiles are digitized against.
+year: 2025
 season_start_month: 11
 season_end_month: 3
 
