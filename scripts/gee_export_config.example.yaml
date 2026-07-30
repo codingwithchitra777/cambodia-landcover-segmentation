@@ -1,0 +1,23 @@
+    # Copy to gee_export_config.yaml (gitignored) and fill in your values, then:
+#   python scripts/gee_export.py --config scripts/gee_export_config.yaml
+# Any flag here can still be overridden on the CLI.
+
+ee_project: your-gee-cloud-project-id
+aoi: data/raw/blocks.geojson
+block_id_field: block_id
+
+# Start year of the dry season: year=2025 -> Nov 2025 to Mar 2026.
+# Pick the most recent COMPLETE dry season, and match it to the season your
+# hand-corrected ground-truth tiles are digitized against.
+year: 2025
+season_start_month: 11
+season_end_month: 3
+
+cs_threshold: 0.6
+scale: 10
+crs: EPSG:4326
+
+export: imagery,labels
+export_target: drive
+drive_folder: cambodia_lc_export
+prefix: cambodia_lc

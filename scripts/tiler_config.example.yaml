@@ -1,0 +1,10 @@
+# Copy to tiler_config.yaml (gitignored) and fill in your values, then:
+#   python scripts/tiler.py --config scripts/tiler_config.yaml
+
+imagery_dir: data/raw
+labels_dir: data/labels
+output_dir: data/tiles
+
+tile_size: 512
+max_nodata_frac: 0.3
+imagery_nodata: 0

@@ -1,0 +1,12 @@
+# Standard DeepLabV3+ baseline. Copy per experiment; run 3 seeds (0,1,2).
+model: deeplabv3plus
+loss: ce
+seed: 0
+epochs: 50
+batch_size: 8
+lr: 0.001
+weight_decay: 0.0001
+augment: true
+oversample: true
+pretrained: true
+class_weights: true

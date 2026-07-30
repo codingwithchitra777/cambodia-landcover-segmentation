@@ -1,0 +1,13 @@
+# SWIR-Attention DeepLabV3+ (the contribution). Note loss = boundary_aware
+# (Dice + boundary), which is modification 3.
+model: swir_attention
+loss: boundary_aware
+seed: 0
+epochs: 50
+batch_size: 8
+lr: 0.001
+weight_decay: 0.0001
+augment: true
+oversample: true
+pretrained: true
+class_weights: true

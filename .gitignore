@@ -2,7 +2,7 @@
 data/raw/
 data/tiles/
 data/labels/
-models/
+/models/
 *.tif
 *.tiff
 *.npz
@@ -17,7 +17,7 @@ models/
 !data/raw/.gitkeep
 !data/tiles/.gitkeep
 !data/labels/.gitkeep
-!models/.gitkeep
+!/models/.gitkeep
 
 # --- Results: keep small tables/figures, ignore heavy dumps ---
 results/**/*.pkl
