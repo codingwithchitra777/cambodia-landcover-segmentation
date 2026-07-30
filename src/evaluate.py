@@ -120,7 +120,7 @@ def aggregate(args):
         runs.setdefault(m["model"], []).append(m)
 
     models = args.models or sorted(runs)
-    print(f"\n{'model':22s} {'seeds':5s} {'mIoU (mean±std)':20s} {'boundary-F1':16s} {'params(M)':10s}")
+    print(f"\n{'model':22s} {'seeds':5s} {'mIoU (mean+/-std)':20s} {'boundary-F1':16s} {'params(M)':10s}")
     print("-" * 78)
     summary = {}
     for name in models:
@@ -137,8 +137,8 @@ def aggregate(args):
         summary[name] = {"n_seeds": len(seeds), "miou_mean": mean, "miou_std": std,
                          "boundary_f1_mean": bmean, "boundary_f1_std": bstd,
                          "n_params_millions": seeds[0]["n_params_millions"]}
-        print(f"{name:22s} {len(seeds):^5d} {mean:.4f} ± {std:.4f}     "
-              f"{bmean:.4f} ± {bstd:.4f}   {seeds[0]['n_params_millions']:.2f}")
+        print(f"{name:22s} {len(seeds):^5d} {mean:.4f} +/- {std:.4f}     "
+              f"{bmean:.4f} +/- {bstd:.4f}   {seeds[0]['n_params_millions']:.2f}")
 
     out = Path(args.aggregate) / "summary.json"
     out.write_text(json.dumps(summary, indent=2))
