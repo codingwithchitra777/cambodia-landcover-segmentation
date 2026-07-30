@@ -18,13 +18,31 @@ Sequence, per CLAUDE.md's status section. Each step blocks the next.
 The study area is a **systematic spatial sample**, not full national coverage —
 see `docs/methodology_sampling.md` for the rationale and limitations.
 
-- **58 blocks**, 20 × 20 km each, on a grid at 55 km centre-to-centre spacing.
-- Covers **23,200 km² = 12.8% of Cambodia** (181,035 km²).
-- Estimated **~2.8 GB** imagery, **~885 tiles** (before no-data discard).
+- **58 grid blocks** (20 × 20 km, 55 km spacing) **+ 1 hand-placed top-up block**
+  (`ppcore`, central Phnom Penh, ~14 km) added to boost the rare built-up class.
+- Grid covers **23,200 km² = 12.8% of Cambodia** (181,035 km²).
+- Actual export: **~2.6 GB** imagery over **59 blocks**, tiled to **934 tiles**.
 - Season: **`year=2025`** (dry season Nov 2025 – Mar 2026).
-- Split will be ~40 train / ~9 val / ~9 test **blocks** (by block, never per-tile).
-- Grid params live in `scripts/make_blocks_config.example.yaml`; regenerate with
-  `make_blocks.py` (lower `spacing_km` for denser coverage).
+- Split (seed 42, by block): **41 train / 9 val / 9 test** blocks = 646 / 144 / 144
+  tiles. `ppcore` landed in **train**.
+- Grid params live in `scripts/make_blocks_config.example.yaml`; the top-up block
+  lives in `data/raw/blocks_topup.geojson` and is exported separately.
+
+### Class distribution (WorldCover, 934 tiles) and decisions
+Forest dominates (~46%), so the dataset is **heavily imbalanced** — this is why
+mIoU (not pixel accuracy) is the headline metric. Distribution: forest 45.7%,
+cropland 32.0%, wet/grass 14.6%, water 5.8%, built-up 1.4%, bare/shrub 0.5%.
+Decisions made:
+- **Train on WorldCover labels** (band 0) — cleaner/less salt-and-pepper than
+  Dynamic World, which disagrees strongly (cropland 32% vs 11%, bare/shrub 0.5% vs
+  17.7%). Both label bands are kept in the tiles; the loader selects band 0. The
+  ~150 hand-corrected tiles remain the trusted test set.
+- **Built-up is rare** (1.1% → 1.4% after the Phnom Penh top-up). Cambodia is
+  mostly rural, so built-up will stay small. **Decision: handle its rarity at
+  training time** — class-weighted loss + oversampling the urban tiles — rather
+  than exporting more urban blocks (diminishing returns). The boundary-aware loss
+  (a SWIR-Attention modification) also helps thin urban structures.
+- Water is adequately represented (~5.8%); no top-up needed.
 
 ## Next, in order
 
